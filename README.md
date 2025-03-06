@@ -80,3 +80,14 @@ hist = model.fit(train_generator, steps_per_epoch=2000//32,
                  validation_steps= 1000//32,
                  callbacks=[checkpoint])
 ```
+**Para graficar la precisión (accuracy)del modelo durante el entrenamiento y la validación. La línea `plt.plot(hist.history['accuracy'])` muestra la precisión en el conjunto de entrenamiento, mientras que `plt.plot(hist.history['val_accuracy'])` muestra la precisión en el conjunto de validación. La función `plt.legend()` añade una leyenda para distinguir ambas curvas, y `plt.show()` despliega la gráfica. Esto permite visualizar cómo evoluciona el rendimiento del modelo a lo largo de las épocas, ayudando a identificar si hay sobreajuste (overfitting) o si el modelo está aprendiendo adecuadamente.**
+```python
+plt.plot(hist.history['accuracy'], label = 'Train')
+plt.plot(hist.history['val_accuracy'], label = 'Val')
+plt.legend()
+plt.show()
+```
+
+El resultado es:
+
+[Resultado]()
