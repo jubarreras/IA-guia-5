@@ -91,3 +91,5 @@ plt.show()
 El resultado es:
 
 ![Resultado](https://github.com/jubarreras/IA-guia-5/blob/main/Captura%20de%20pantalla%202025-03-05%20233930.png)
+
+Como conclusión del analisis de este modelo de clasificación es que tiene un error pequeño para la poca cantidad de iamgenes que tiene en el dataset y se puede hacer mas preciso poniendole mas imagenes al mismo, tambien hay que resaltar que el entrenamiento le toma un buen tiempo a la maquina para procesar toda esta información.
