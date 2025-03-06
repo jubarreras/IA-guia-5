@@ -21,7 +21,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 from  tensorflow.keras import models, optimizers, regularizers
 ```
-**2.define una red neuronal convolucional (CNN) para clasificar imágenes de perros y gatos. La red comienza con capas convolucionales (Conv2D) que extraen características de las imágenes usando filtros, seguidas de capas de pooling (MaxPooling2D) que reducen la dimensionalidad. Luego, una capa Flatten convierte los datos en un vector 1D, y se añade una capa densa (Dense) con 512 neuronas para combinar características. Un Dropout del 50% ayuda a prevenir el sobreajuste. Finalmente, una capa densa de salida con activación sigmoide (sigmoid) clasifica la imagen como perro o gato. El modelo resume su arquitectura con model.summary().**
+**2. Define una red neuronal convolucional (CNN) para clasificar imágenes de perros y gatos. La red comienza con capas convolucionales (Conv2D) que extraen características de las imágenes usando filtros, seguidas de capas de pooling (MaxPooling2D) que reducen la dimensionalidad. Luego, una capa Flatten convierte los datos en un vector 1D, y se añade una capa densa (Dense) con 512 neuronas para combinar características. Un Dropout del 50% ayuda a prevenir el sobreajuste. Finalmente, una capa densa de salida con activación sigmoide (sigmoid) clasifica la imagen como perro o gato. El modelo resume su arquitectura con model.summary().**
 ```python
 model = models.Sequential()
 
@@ -43,4 +43,29 @@ model.add(Dense(512, activation='relu'))
 model.add(Dense(1, activation='sigmoid'))
 
 model.summary()
+```
+**Este código utiliza ImageDataGenerator de Keras para preprocesar y aumentar datos en un problema de clasificación binaria de imágenes (perros vs. gatos). Para el entrenamiento, train_datagen normaliza las imágenes (escalando los píxeles a [0, 1]) y aplica transformaciones aleatorias (rotación, desplazamiento, zoom, etc.) para aumentar la diversidad del dataset y evitar el sobreajuste. Para la validación, test_datagen solo normaliza las imágenes sin transformaciones. Luego, flow_from_directory carga las imágenes desde directorios organizados por clase, las redimensiona a 150x150 píxeles, y genera lotes de 32 imágenes con etiquetas binarias (0 o 1). Los generadores resultantes (train_generator y validation_generator) se usan para entrenar y validar el modelo, proporcionando datos listos para la red neuronal**
+
+```python
+train_datagen = ImageDataGenerator(
+    rescale=1./255,
+    rotation_range=40,
+    width_shift_range=0.2,
+    height_shift_range=0.2,
+    shear_range=0.2,
+    zoom_range=0.2,
+    horizontal_flip=True
+    )
+test_datagen = ImageDataGenerator(rescale=1./255)
+train_generator = train_datagen.flow_from_directory('../input/cnn-data-sources/cats_and_dogs/train',
+                                 target_size=(150,150),
+                                 batch_size=32,
+                                 class_mode='binary'
+                                 )
+
+validation_generator = test_datagen.flow_from_directory('../input/cnn-data-sources/cats_and_dogs/validation',
+                                 target_size=(150,150),
+                                 batch_size=32,
+                                 class_mode='binary'
+                                 )
 ```
