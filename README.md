@@ -69,3 +69,14 @@ validation_generator = test_datagen.flow_from_directory('../input/cnn-data-sourc
                                  class_mode='binary'
                                  )
 ```
+**Primero, se configura un callback ModelCheckpoint para guardar el mejor modelo durante el entrenamiento (basado en la precisión de validación val_accuracy) en un archivo llamado modelo_perros_gatos.hdf5. Luego, se compila el modelo especificando la función de pérdida (binary_crossentropy para problemas binarios), el optimizador (Adam) y la métrica a monitorear (accuracy). Finalmente, se entrena el modelo con model.fit, utilizando los generadores de datos (train_generator y validation_generator), definiendo el número de pasos por época y épocas totales, y aplicando el callback para guardar el mejor modelo automáticamente.**
+```python
+checkpoint = ModelCheckpoint('modelo_perros_gatos.hdf5',monitor='val_accuracy', verbose= 1, save_best_only=True)
+model.compile(loss='binary_crossentropy', optimizer =optimizers.Adam(),
+             metrics=['accuracy'])
+hist = model.fit(train_generator, steps_per_epoch=2000//32,
+                epochs=100,
+                validation_data=validation_generator,
+                 validation_steps= 1000//32,
+                 callbacks=[checkpoint])
+```
