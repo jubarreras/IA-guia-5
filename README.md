@@ -90,4 +90,4 @@ plt.show()
 
 El resultado es:
 
-[Resultado]()
+[Resultado](https://github.com/jubarreras/IA-guia-5/blob/main/Captura%20de%20pantalla%202025-03-05%20233930.png)
