@@ -1,2 +1,46 @@
 # IA-guia-5
 Solución a la guía #5 de la materia de Inteligencia Artificial en la Universidad Nacional de Colombia, hecha por los estudiante: Juan David Barrera Salamanca, Yeray Dario Moreno Rangel y Juan Diego Lozano Colmenares
+
+### Cada uno de ustedes consiga 100 imágenes de perros y 100 imágenes de gatos. Conformen un dataset de perros y gatos del curso. Desarrollen un modelo de clasificación de perros y gatos, usando redes neuronales.
+
+El proceso incluirá la preparación de los datos, la construcción de la arquitectura de la red neuronal, el entrenamiento del modelo y la evaluación de su rendimiento. Para guiar este proceso, he encontrado un código en Kaggle que implementa un modelo de clasificación de imágenes utilizando redes neuronales convolucionales (CNN), una variante especialmente efectiva para tareas de visión por computadora. A lo largo de este proyecto, explicaremos paso a paso cómo funciona este código, desde la carga y preprocesamiento de las imágenes hasta el entrenamiento y la validación del modelo.
+**1. Importación de librerias**
+```python
+import tensorflow as tf 
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Dropout, Flatten, Dense
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
+from  tensorflow.keras import models, optimizers, regularizers
+```
+
+**1. Importación de librerias**
+```python
+import tensorflow as tf 
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Dropout, Flatten, Dense
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
+from  tensorflow.keras import models, optimizers, regularizers
+```
+**2.define una red neuronal convolucional (CNN) para clasificar imágenes de perros y gatos. La red comienza con capas convolucionales (Conv2D) que extraen características de las imágenes usando filtros, seguidas de capas de pooling (MaxPooling2D) que reducen la dimensionalidad. Luego, una capa Flatten convierte los datos en un vector 1D, y se añade una capa densa (Dense) con 512 neuronas para combinar características. Un Dropout del 50% ayuda a prevenir el sobreajuste. Finalmente, una capa densa de salida con activación sigmoide (sigmoid) clasifica la imagen como perro o gato. El modelo resume su arquitectura con model.summary().**
+```python
+model = models.Sequential()
+
+model.add(Conv2D(32, (3,3), activation= 'relu', input_shape=(150,150,3)))
+model.add(MaxPooling2D((2,2)))
+
+model.add(Conv2D(64, (3,3), activation = 'relu'))
+model.add(MaxPooling2D((2,2)))
+
+model.add(Conv2D(128, (3,3), activation = 'relu'))
+model.add(MaxPooling2D((2,2)))
+
+model.add(Conv2D(128, (3,3), activation = 'relu'))
+model.add(MaxPooling2D((2,2)))
+
+model.add(Flatten())
+model.add(Dropout(0.5))
+model.add(Dense(512, activation='relu'))
+model.add(Dense(1, activation='sigmoid'))
+
+model.summary()
+```
